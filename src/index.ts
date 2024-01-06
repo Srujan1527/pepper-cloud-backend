@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+
+import formRoutes from "./form/routes";
 export const app = express();
 dotenv.config();
 
@@ -15,6 +17,9 @@ app.use(
 
 app.use(bodyParser.json());
 app.use(express.json());
+
+app.use("/form", formRoutes);
+
 const port = process.env.PORT;
 const connectionString = process.env.MONGODB_CONNECTION_URL as string;
 mongoose.connect(connectionString).then(() => {
