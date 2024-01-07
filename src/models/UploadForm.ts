@@ -1,9 +1,28 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-const inputObjSchema = new mongoose.Schema({
+enum InputType {
+  text = "text",
+  number = "number",
+  email = "email",
+  password = "password",
+  date = "date",
+}
+
+interface InputObj {
+  type: InputType;
+  title: string;
+  placeholder: string;
+}
+
+interface FormObj extends Document {
+  formTitle: string;
+  allInputs: InputObj[];
+}
+
+const inputObjSchema = new mongoose.Schema<InputObj>({
   type: {
     type: String,
-    enum: ["text", "number", "email", "password", "date"],
+    enum: Object.values(InputType),
     required: true,
   },
   title: {
@@ -16,7 +35,7 @@ const inputObjSchema = new mongoose.Schema({
   },
 });
 
-const formObjSchema = new mongoose.Schema({
+const formObjSchema = new mongoose.Schema<FormObj>({
   formTitle: {
     type: String,
     required: true,
@@ -25,6 +44,6 @@ const formObjSchema = new mongoose.Schema({
   allInputs: [inputObjSchema],
 });
 
-const Form = mongoose.model("Form", formObjSchema);
+const Form = mongoose.model<FormObj>("Form", formObjSchema);
 
 export default Form;
