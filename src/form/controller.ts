@@ -3,7 +3,6 @@ export const getForm = async (req: any, res: any) => {
   try {
     const { id } = req.body;
     const form = await service.getForm(id);
-    // console.log({ form });
 
     if (form) {
       return res.status(200).json({ form });
@@ -19,7 +18,6 @@ export const getForm = async (req: any, res: any) => {
 export const getAllForms = async (req: any, res: any) => {
   try {
     const forms = await service.getAllForms();
-    // console.log({ forms });
 
     if (forms) {
       return res.status(200).json({ forms });
